@@ -34,27 +34,34 @@ const ReviewForm = ({ movieId }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="mt-4 space-y-4">
       <input
         type="text"
         placeholder="Your Name"
         value={reviewerName}
         onChange={(e) => setReviewerName(e.target.value)}
+        className="border rounded-md p-2 w-full"
       />
       <input
         type="number"
         placeholder="Rating"
         value={rating}
         onChange={(e) => setRating(Number(e.target.value))}
+        className="border rounded-md p-2 w-full"
+        min="0"
+        max="10"
       />
       <textarea
         placeholder="Comments"
         value={comments}
         onChange={(e) => setComments(e.target.value)}
+        className="border rounded-md p-2 w-full"
       />
-      <button type="submit">Submit Review</button>
-      {success && <p>Review submitted successfully!</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <button type="submit" className="bg-blue-500 text-white rounded-md p-2 hover:bg-blue-600 transition">
+        Submit Review
+      </button>
+      {success && <p className="text-green-600">Review submitted successfully!</p>}
+      {error && <p className="text-red-600">{error}</p>}
     </form>
   );
 };
