@@ -9,15 +9,14 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-    const { movieId, reviewerName, rating, comment } = await request.json(); // Change comments to comment
-    const newReview = await prisma.review.create({
-      data: {
-        movieId,
-        reviewerName,
-        rating,
-        comment, // Ensure you use comment here
-      },
-    });
-    return NextResponse.json(newReview);
-  }
-  
+  const { movieId, reviewerName, rating, comment } = await request.json();
+  const newReview = await prisma.review.create({
+    data: {
+      movieId,
+      reviewerName,
+      rating,
+      comment,
+    },
+  });
+  return NextResponse.json(newReview);
+}

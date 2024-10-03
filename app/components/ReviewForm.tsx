@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 const ReviewForm = ({ movieId }) => {
   const [reviewerName, setReviewerName] = useState('');
   const [rating, setRating] = useState(0);
-  const [comments, setComments] = useState('');
+  const [comment, setComment] = useState('');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
@@ -18,7 +18,7 @@ const ReviewForm = ({ movieId }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ movieId, reviewerName, rating, comments }),
+        body: JSON.stringify({ movieId, reviewerName, rating, comment }),
       });
 
       if (!response.ok) throw new Error('Failed to submit review');
@@ -26,7 +26,7 @@ const ReviewForm = ({ movieId }) => {
       // Clear the form
       setReviewerName('');
       setRating(0);
-      setComments('');
+      setComment('');
       setSuccess(true);
     } catch (err:any) {
       setError(err.message);
@@ -53,8 +53,8 @@ const ReviewForm = ({ movieId }) => {
       />
       <textarea
         placeholder="Comments"
-        value={comments}
-        onChange={(e) => setComments(e.target.value)}
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
         className="border rounded-md p-2 w-full"
       />
       <button type="submit" className="bg-blue-500 text-white rounded-md p-2 hover:bg-blue-600 transition">

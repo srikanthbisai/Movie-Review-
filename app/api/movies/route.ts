@@ -1,4 +1,3 @@
-// app/api/movies/route.ts
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
@@ -8,7 +7,16 @@ export async function GET() {
   const movies = await prisma.movie.findMany({
     include: { reviews: true }, // Ensure to include reviews
   });
-  return NextResponse.json(movies);
+  
+  // Calculate average rating
+  const moviesWithAverageRating = movies.map(movie => {
+    const averageRating = movie.reviews.length > 0 
+      ? movie.reviews.reduce((acc, review) => acc + review.rating, 0) / movie.reviews.length 
+      : 0;
+    return { ...movie, averageRating };
+  });
+
+  return NextResponse.json(moviesWithAverageRating);
 }
 
 export async function POST(request: Request) {

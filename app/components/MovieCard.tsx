@@ -1,25 +1,31 @@
-'use client';
-
+"use client"
 import React from 'react';
-import ReviewForm from './ReviewForm';
+import { useRouter } from 'next/navigation';
 
-const MovieCard = ({ movie }) => {
+interface MovieCardProps {
+  id: number;
+  title: string;
+  releaseDate: string;
+  averageRating: number | null; // Allow null
+}
+
+const MovieCard: React.FC<MovieCardProps> = ({ id, title, releaseDate, averageRating }) => {
+  const router = useRouter();
+
+  const handleCardClick = () => {
+    router.push(`/reviews/${id}`); // Navigate to the reviews page for this movie
+  };
+
   return (
-    <div className="border rounded-lg p-4 bg-gray-50 mt-4">
-      <p className="font-medium">Average Rating: {movie.averageRating}</p>
-      
-      {/* Include ReviewForm here */}
-      <ReviewForm movieId={movie.id} />
-      
-      {/* Render reviews */}
-      <ul className="mt-4 space-y-2">
-        {movie.reviews.map(review => (
-          <li key={review.id} className="flex justify-between">
-            <span className="font-semibold">{review.reviewerName || 'Anonymous'}</span>: 
-            <span>{review.comment} (Rating: {review.rating})</span>
-          </li>
-        ))}
-      </ul>
+    <div
+      className="border rounded-md p-4 cursor-pointer hover:shadow-lg transition"
+      onClick={handleCardClick}
+    >
+      <h2 className="text-xl font-semibold">{title}</h2>
+      <p className="text-gray-600">Release Date: {new Date(releaseDate).toLocaleDateString()}</p>
+      <p className="text-gray-600">
+        Average Rating: {averageRating !== null ? averageRating.toFixed(1) : 'N/A'}
+      </p>
     </div>
   );
 };
